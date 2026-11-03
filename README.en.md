@@ -2,7 +2,7 @@
 
 # drip-live
 
-[![CI](https://github.com/yktsnet/drip-live/actions/workflows/ci.yml/badge.svg)](https://github.com/yktsnet/drip-live/actions/workflows/ci.yml)
+[![CI](https://github.com/yktsnet/drip-live-public/actions/workflows/ci.yml/badge.svg)](https://github.com/yktsnet/drip-live-public/actions/workflows/ci.yml)
 
 A live execution layer that connects a backtest-validated strategy to a broker's OpenAPI **with the same decision code and the same config**. Decisions never touch the broker; all the execution layer adds is lot sizing and safety devices — an idempotent order gate, reconciling OCO, EOD close, and a kill switch. The formula you validated and the formula you run stay identical, unattended on systemd timers.
 
