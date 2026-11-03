@@ -6,7 +6,6 @@
       "Bash(nix-shell -p *)"
     ],
     "deny": [
-      "Bash(ssh *)"
     ]
   }
 }
