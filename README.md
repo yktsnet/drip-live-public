@@ -2,7 +2,7 @@
 
 # drip-live
 
-[![CI](https://github.com/yktsnet/drip-live/actions/workflows/ci.yml/badge.svg)](https://github.com/yktsnet/drip-live/actions/workflows/ci.yml)
+[![CI](https://github.com/yktsnet/drip-live-public/actions/workflows/ci.yml/badge.svg)](https://github.com/yktsnet/drip-live-public/actions/workflows/ci.yml)
 
 バックテストで検証した戦略を、**同一の判定コード・同一の config のまま**実弾に接続する実行層。判定はブローカーに触れず、実行層が足すのはロット計算と安全装置（冪等な発注ゲート・照合型 OCO・EOD 決済・キルスイッチ）だけである。検証した式と運用する式を一致させたまま、systemd timer で無人運転する。
 
