@@ -40,18 +40,18 @@ cat $DRIP_LIVE_DATA/state/sent.jsonl     # dry_run=true の送信記録
 ```mermaid
 flowchart TD
     subgraph offline["資格情報なしで動く"]
-        BARS[("bars/*.jsonl")] --> BS["build_signal<br/>decide()"]
+        BARS[("📈 bars/*.jsonl")] --> BS["🧠 build_signal<br/>decide()"]
     end
 
-    BS --> SIG[/"signal.jsonl<br/>追記専用・唯一の接点"/]
+    BS --> SIG[/"📝 signal.jsonl<br/>追記専用・唯一の接点"/]
 
     subgraph online["ブローカーに接続する"]
-        SG{"sender_gate"} --> SENT[("sent.jsonl")]
+        SG{"🚦 sender_gate"} --> SENT[("📒 sent.jsonl")]
     end
 
     SIG --> SG
-    SG -->|"同スロット送信済み / dry_run"| SKIP(["発注しない"])
-    SG -->|"未送信 かつ 実発注 ON"| BROKER[("Broker OpenAPI")]
+    SG -->|"同スロット送信済み / dry_run"| SKIP(["⏸️ 発注しない"])
+    SG -->|"未送信 かつ 実発注 ON"| BROKER[("🏦 Broker OpenAPI")]
 ```
 
 各段は systemd の oneshot timer が駆動する（`fetch_bars` 5分・`orchestrator` 30分・`token_refresh` 5分）。`fetch_bars` が `bars/*.jsonl` を更新し、`token_refresh` が `tokens/` を維持する。
@@ -64,14 +64,14 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    POS(["建玉あり"])
-    POS --> OCO{{"oco_manager<br/>エントリー直後に TP/SL"}}
-    POS --> EOD{{"eod_close<br/>セッション終了時"}}
-    POS --> HC{{"halt_check<br/>5分ごと"}}
-    HALT[/"halt_flags.jsonl に1行追記"/] -.->|"停止フラグ"| HC
-    HALT -.->|"シグナル生成も止まる"| BS["build_signal"]
-    OCO --> CLOSED[("建玉が閉じる")]
-    EOD --> FC["force_close"]
+    POS(["💼 建玉あり"])
+    POS --> OCO{{"🎯 oco_manager<br/>エントリー直後に TP/SL"}}
+    POS --> EOD{{"🌙 eod_close<br/>セッション終了時"}}
+    POS --> HC{{"⏱️ halt_check<br/>5分ごと"}}
+    HALT[/"🛑 halt_flags.jsonl に1行追記"/] -.->|"停止フラグ"| HC
+    HALT -.->|"シグナル生成も止まる"| BS["🧠 build_signal"]
+    OCO --> CLOSED[("✅ 建玉が閉じる")]
+    EOD --> FC["🚨 force_close"]
     HC --> FC
     FC --> CLOSED
 ```
