@@ -40,18 +40,18 @@ Below is the main path up to order submission. The halt and force-close paths ar
 ```mermaid
 flowchart TD
     subgraph offline["runs without credentials"]
-        BARS[("bars/*.jsonl")] --> BS["build_signal<br/>decide()"]
+        BARS[("📈 bars/*.jsonl")] --> BS["🧠 build_signal<br/>decide()"]
     end
 
-    BS --> SIG[/"signal.jsonl<br/>append-only, the only contact point"/]
+    BS --> SIG[/"📝 signal.jsonl<br/>append-only, the only contact point"/]
 
     subgraph online["talks to the broker"]
-        SG{"sender_gate"} --> SENT[("sent.jsonl")]
+        SG{"🚦 sender_gate"} --> SENT[("📒 sent.jsonl")]
     end
 
     SIG --> SG
-    SG -->|"slot already sent / dry_run"| SKIP(["no order"])
-    SG -->|"unsent and live trading ON"| BROKER[("Broker OpenAPI")]
+    SG -->|"slot already sent / dry_run"| SKIP(["⏸️ no order"])
+    SG -->|"unsent and live trading ON"| BROKER[("🏦 Broker OpenAPI")]
 ```
 
 Each stage is driven by a systemd oneshot timer (`fetch_bars` every 5 min, `orchestrator` every 30 min, `token_refresh` every 5 min). `fetch_bars` keeps `bars/*.jsonl` current and `token_refresh` maintains `tokens/`.
@@ -64,14 +64,14 @@ Three independent paths can close an open position. If any one of them fails, th
 
 ```mermaid
 flowchart TD
-    POS(["open position"])
-    POS --> OCO{{"oco_manager<br/>TP/SL right after entry"}}
-    POS --> EOD{{"eod_close<br/>at session end"}}
-    POS --> HC{{"halt_check<br/>every 5 min"}}
-    HALT[/"append one line to halt_flags.jsonl"/] -.->|"halt flag"| HC
-    HALT -.->|"signal generation stops too"| BS["build_signal"]
-    OCO --> CLOSED[("position closed")]
-    EOD --> FC["force_close"]
+    POS(["💼 open position"])
+    POS --> OCO{{"🎯 oco_manager<br/>TP/SL right after entry"}}
+    POS --> EOD{{"🌙 eod_close<br/>at session end"}}
+    POS --> HC{{"⏱️ halt_check<br/>every 5 min"}}
+    HALT[/"🛑 append one line to halt_flags.jsonl"/] -.->|"halt flag"| HC
+    HALT -.->|"signal generation stops too"| BS["🧠 build_signal"]
+    OCO --> CLOSED[("✅ position closed")]
+    EOD --> FC["🚨 force_close"]
     HC --> FC
     FC --> CLOSED
 ```
